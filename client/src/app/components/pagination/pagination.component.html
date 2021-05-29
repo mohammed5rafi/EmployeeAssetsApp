@@ -1,0 +1,27 @@
+<div class="row" *ngIf="data">
+    <div class="col-sm-12 col-md-5">
+        <div *ngIf="itemIndexEnd > 0">Showing {{itemIndexStart + 1}} to {{itemIndexEnd}} of
+            {{data.length}} entries</div>
+        <div *ngIf="itemIndexEnd === 0">No entries found</div>
+    </div>
+    <div class="col-sm-12 col-md-7">
+        <nav aria-label="Page navigation mb-3">
+            <ul class="pagination justify-content-end">
+                <li class="page-item previous" [ngClass]="{'disabled': currentPage===1}">
+                    <a class="page-link" aria-label="Previous" (click)="onPreviousClick()">
+                        <span aria-hidden="true">« Prev</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item" [ngClass]="{'active': currentPage===num}" *ngFor="let num of buttonNumbers"><a
+                        class="page-link" (click)="onPageClick(num)">{{num}}</a></li>
+                <li class="page-item" [ngClass]="{'disabled': currentPage===totalPages}">
+                    <a class="page-link" aria-label="Next" (click)="onNextClick()">
+                        <span aria-hidden="true">Next »</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
