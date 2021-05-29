@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { MastersModule } from './masters/masters.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     SharedModule,
+    MastersModule,
     HttpClientModule,
     ComponentsModule,
     RouterModule,
