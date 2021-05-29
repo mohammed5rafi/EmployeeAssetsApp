@@ -10,6 +10,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ["./assets-master.component.css"],
 })
 export class AssetsMasterComponent implements OnInit {
+  public page = 1;
+  public itemsPerPage = 10;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
+
   constructor(
     private toastr: ToastrService,
     private router: Router,
