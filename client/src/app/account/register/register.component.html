@@ -5,46 +5,49 @@
         <img src="../../../assets/images/1544601251919.png" alt="IMG" />
       </div>
 
-      <form
-        #registerForm="ngForm"
-        (ngSubmit)="register()"
-        class="login100-form validate-form"
-      >
+      <form [formGroup]="RegisterForm" class="login100-form validate-form">
         <span class="login100-form-title"> Member Register </span>
 
         <div class="wrap-input100 validate-input">
           <input
-            class="input100"
+            class="input100 required"
             type="text"
             name="email"
             placeholder="User Name"
-            [(ngModel)]="model.username"
+            formControlName="username"
           />
           <span class="focus-input100"></span>
           <span class="symbol-input100">
             <i class="fa fa-envelope" aria-hidden="true"></i>
           </span>
         </div>
-
-        <div
-          class="wrap-input100 validate-input"
-          data-validate="Password is required"
-        >
+        <validation-messages
+          [control]="RegisterForm.controls.username"
+        ></validation-messages>
+        <div class="wrap-input100 validate-input">
           <input
-            class="input100"
+            class="input100 required"
             type="password"
             name="pass"
             placeholder="Password"
-            [(ngModel)]="model.password"
+            formControlName="password"
           />
           <span class="focus-input100"></span>
           <span class="symbol-input100">
             <i class="fa fa-lock" aria-hidden="true"></i>
           </span>
         </div>
-
+        <validation-messages
+          [control]="RegisterForm.controls.username"
+        ></validation-messages>
         <div class="container-login100-form-btn">
-          <button class="login100-form-btn">Sign up</button>
+          <button
+            type="submit"
+            (click)="OnRegister(RegisterForm.valid)"
+            class="login100-form-btn"
+          >
+            Sign up
+          </button>
         </div>
 
         <div class="text-center p-t-12">
