@@ -1,0 +1,21 @@
+#accordion {
+  display: block;
+  background-color: #ffffff;
+  font-weight: bold;
+  margin: 1px;
+  cursor: pointer;
+  padding: 5 5 5 7px;
+  list-style: circle;
+}
+.redcircle {
+  color: red;
+}
+.greencircle {
+  color: green;
+}
+.yellowcircle {
+  color: #ffbf00;
+}
+.floatright {
+  margin-right: 7px;
+}

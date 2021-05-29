@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
+import { NotFoundComponent } from './components/errors/not-found/not-found.component';
+import { ServerErrorComponent } from './components/errors/server-error/server-error.component';
+import { AuthGuard } from './core/guards/auth.guard';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 const routes: Routes = [
@@ -10,6 +13,8 @@ const routes: Routes = [
     path: "",
     redirectTo: "dashboard",
     pathMatch: "full",
+    runGuardsAndResolvers: "always",
+    canActivate: [AuthGuard],
   },
   {
     path: "",
@@ -19,8 +24,23 @@ const routes: Routes = [
         path: "",
         loadChildren:
           "./layouts/admin-layout/admin-layout.module#AdminLayoutModule",
+        canActivate: [AuthGuard],
       },
     ],
+  },
+
+  {
+    path: "not-found",
+    component: NotFoundComponent,
+  },
+  {
+    path: "server-error",
+    component: ServerErrorComponent,
+  },
+  {
+    path: "**",
+    component: NotFoundComponent,
+    pathMatch: "full",
   },
 ];
 
