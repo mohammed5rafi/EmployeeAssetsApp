@@ -8,3 +8,16 @@ img {
 img:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
+
+.mat-error {
+  border-color: #ff7588 !important;
+  background-color: #ffbcc6 !important;
+  color: #c2001b !important;
+  font-weight: 400;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  padding: 0.75rem 1.2rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}

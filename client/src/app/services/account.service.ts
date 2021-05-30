@@ -15,7 +15,7 @@ export class AccountService {
   currentUser$ = this.currentUserSource.asObservable();
   constructor(private http: HttpClient) {}
   login(model: any) {
-    return this.http.post(API_URL + "account/login", model).pipe(
+    return this.http.post(`${API_URL}/account/login`, model).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
@@ -33,7 +33,7 @@ export class AccountService {
     this.currentUserSource.next(null);
   }
   register(model: any) {
-    return this.http.post(API_URL + "account/register", model).pipe(
+    return this.http.post(`${API_URL}/account/register`, model).pipe(
       map((user: User) => {
         if (user) {
           localStorage.setItem("user", JSON.stringify(user));

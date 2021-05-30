@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MasterService } from 'app/services/master.service';
+import { EmployeeAssetsGlobalvariables } from 'app/shared/employee-Assets.modal';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: "app-assets-master",
@@ -75,7 +77,7 @@ export class AssetsMasterComponent implements OnInit {
       };
     }
     const dialogRef = this.dialog.open(AssetsAdd, {
-      width: "30vw",
+      width: "50vw",
       data: assetsdata,
       autoFocus: false,
     });
@@ -120,26 +122,31 @@ export class AssetsAdd implements OnInit {
   action: string;
   local_data: any;
   form: FormGroup;
-  documentStatus: any;
-  declaration: any;
-  ensResponse: any;
-  mrnId: any;
+  filteredOptions: Observable<string[]>;
   submitInProgress: boolean = false;
   constructor(
     private fb: FormBuilder,
+    private masterService: MasterService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private router: Router,
+    private _globalEmployeeAssets: EmployeeAssetsGlobalvariables,
     private dialogRef: MatDialogRef<AssetsAdd>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.form = fb.group({
-      username: ["", [Validators.required]],
-      password: ["", [Validators.required]],
+      AssetName: ["", [Validators.required]],
+      PhotoUrl: ["", [Validators.required]],
+      PurchaseDate: ["", [Validators.required]],
+      Category: "",
+      CategoryCode: ["", [Validators.required]],
+      PurchaseAmount: ["", [Validators.required]],
     });
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    await this.getAssetCategory();
+  }
   // doAction(valid) {
   //   if (valid) {
   //     if (this.data.i === 1) {
@@ -237,6 +244,31 @@ export class AssetsAdd implements OnInit {
   //     }
   //   }
   // }
+
+  async getAssetCategory() {
+    await this.masterService.getAssetsCategory().subscribe(
+      (res) => {
+        this.filteredOptions = res;
+      },
+      (error) => {
+        this.toastr.error(error.error);
+      }
+    );
+  }
+  _filter(value: number) {
+    this.filteredOptions = this._globalEmployeeAssets.sortCategoryCodes(
+      this._globalEmployeeAssets.MasterCategory
+    );
+    const filterValue = value.toString().toLowerCase();
+    if (filterValue == null) {
+      this.filteredOptions = this.filteredOptions;
+    } else {
+      this.filteredOptions = this._globalEmployeeAssets.filterCategoryCodes(
+        this.filteredOptions,
+        filterValue
+      );
+    }
+  }
   private getFormattedErrorMessage(errors: string[]): string {
     if (!!errors && errors.length > 0) {
       let message = "Following errors occured.";

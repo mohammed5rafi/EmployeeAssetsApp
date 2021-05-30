@@ -1,54 +1,87 @@
-<h2 mat-dialog-title>ICS-NI</h2>
+<h2 mat-dialog-title>New Assets</h2>
 <hr />
 <mat-dialog-content class="mat-typography">
   <div class="Declaration_AddBox_body">
     <form class="form" [formGroup]="form">
       <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-          <i
-            class="fa fa-info-circle float-left"
-            title="Please enter the ICS-NI login credentials"
-          ></i>
-        </div>
-        <div class="col-md-2"></div>
-      </div>
-      <br />
-      <div class="row">
-        <div class="col-md-2"></div>
-
-        <div class="col-md-8">
+        <div class="col-md-4">
           <div class="form-group">
-            <label>Username</label>
+            <label>Name</label>
             <input
               type="text"
               class="form-control required"
-              formControlName="username"
+              formControlName="AssetName"
             />
             <validation-messages
-              [control]="form.controls.username"
+              [control]="form.controls.AssetName"
             ></validation-messages>
           </div>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Photo Url</label>
+            <input
+              type="text"
+              formControlName="PhotoUrl"
+              class="form-control required"
+            />
+            <validation-messages
+              [control]="form.controls.PhotoUrl"
+            ></validation-messages>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Category</label>
+            <input
+              type="text"
+              #category
+              class="form-control required"
+              formControlName="CategoryCode"
+              [matAutocomplete]="auto"
+              (input)="_filter(category.value)"
+              (focus)="_filter(category.value)"
+              (click)="_filter(category.value)"
+            />
+            <span class="input-group-append">
+              <div class="input-group-text bg-transparent">
+                <i class="fa fa-search" style="color: rgb(86, 168, 186)"></i>
+              </div>
+            </span>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let category of filteredOptions"
+                [value]="category.name"
+              >
+                {{ category.name }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="form.controls.CategoryCode.errors?.requireMatch">
+              <i class="fa fa-info-circle"></i> Invalid Entry. Choose a value
+              from list.
+            </mat-error>
+
+            <validation-messages
+              [control]="form.controls.CategoryCode"
+            ></validation-messages>
+          </div>
+        </div>
       </div>
       <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-4">
           <div class="form-group">
-            <label>Password</label>
+            <label> Purchase Amount</label>
             <input
-              type="password"
-              formControlName="password"
+              type="text"
+              formControlName="PurchaseAmount"
               class="form-control required"
-              minlength="8"
             />
             <validation-messages
-              [control]="form.controls.password"
+              [control]="form.controls.PurchaseAmount"
             ></validation-messages>
           </div>
         </div>
-        <div class="col-md-2"></div>
       </div>
     </form>
   </div>

@@ -11,10 +11,15 @@ export class MasterService {
   constructor(private http: HttpClient) {}
 
   getMasterAssetsList(): Observable<any> {
-    return this.http.get<any>(API_URL + "assets");
+    return this.http.get<any>(`${API_URL}/assets`);
   }
 
   deleteAssetsItemsDetails(id): Observable<any> {
     return this.http.delete(`${API_URL}/assets/${id}`, { observe: "response" });
   }
+  //#region  Assets Category
+  getAssetsCategory(): Observable<any> {
+    return this.http.get<any>(`${API_URL}/assets/category`);
+  }
+  //#endregion
 }

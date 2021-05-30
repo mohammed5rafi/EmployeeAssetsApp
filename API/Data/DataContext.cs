@@ -12,6 +12,8 @@ namespace API.Data
 
         public DbSet<AppUser> Users {get;set;}
         public DbSet<Assets> Assets {get;set;}
+        public DbSet<AssetsCategory> AssetsCategory {get;set;}
+
 
 
     }

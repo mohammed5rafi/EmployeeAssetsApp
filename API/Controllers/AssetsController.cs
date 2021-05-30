@@ -10,7 +10,7 @@ namespace API.Controllers
     public class AssetsController : BaseApiController
     {
 
-
+        #region Constructor
         private readonly IMapper _mapper;
 
         private readonly IAssetsRepository _assetsRepository;
@@ -22,7 +22,8 @@ namespace API.Controllers
       
 
         }
-
+#endregion
+        #region API Services
         [HttpGet]
 
         public async Task<ActionResult<IEnumerable<AssetsDto>>> GetAssets()
@@ -61,5 +62,15 @@ namespace API.Controllers
             var assets = await _assetsRepository.GetAssetsByAsync(name);
             return _mapper.Map<AssetsDto>(assets);
         }
+        #region Assets Category Master
+        [HttpGet]
+        [Route("Category")]
+        public async Task<ActionResult<IEnumerable<AssetsCategoryDto>>> GetAssetsCategory()
+        {
+            return Ok(await _assetsRepository.GetAssetsCategoryAsync());
+        }
+        #endregion
+
+        #endregion
     }
 }
