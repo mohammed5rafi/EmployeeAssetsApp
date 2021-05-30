@@ -17,6 +17,18 @@ export class MasterService {
   deleteAssetsItemsDetails(id): Observable<any> {
     return this.http.delete(`${API_URL}/assets/${id}`, { observe: "response" });
   }
+
+  updateAssetItemsDetails(obj): Observable<any> {
+    return this.http.put<any>(`${API_URL}/assets`, obj, {
+      observe: "response",
+    });
+  }
+  saveAssetsItemsDetails(obj): Observable<any> {
+    return this.http.post<any>(`${API_URL}/assets`, obj, {
+      observe: "response",
+    });
+  }
+
   //#region  Assets Category
   getAssetsCategory(): Observable<any> {
     return this.http.get<any>(`${API_URL}/assets/category`);
