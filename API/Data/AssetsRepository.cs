@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 using API.interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,11 @@ namespace API.Data
         public async Task<Assets> GetAssetsByIdAsync(int id)
         {
             return await _context.Assets.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<AssetsCategory>> GetAssetsCategoryAsync()
+        {
+          return await _context.AssetsCategory.ToListAsync();
         }
 
         public async Task<bool> SaveAllAsync()

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 
+import { EmployeeAssetsGlobalvariables } from './employee-Assets.modal';
 import { ValidationMessagesComponent } from './validators/validation-messages.component';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ValidationMessagesComponent } from './validators/validation-messages.co
     }),
     HttpClientModule,
   ],
+  providers: [EmployeeAssetsGlobalvariables],
   exports: [ValidationMessagesComponent, FormsModule, ReactiveFormsModule],
 })
 export class SharedModule {}

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 
 namespace API.interfaces
@@ -16,7 +17,7 @@ namespace API.interfaces
 
         Task<Assets> GetAssetsByIdAsync(int id);
         Task<Assets> GetAssetsByAsync(string name);
-
+         Task<IEnumerable<AssetsCategory>> GetAssetsCategoryAsync();
 }
     
     }
