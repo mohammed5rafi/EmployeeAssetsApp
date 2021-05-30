@@ -82,6 +82,26 @@
             ></validation-messages>
           </div>
         </div>
+
+        <div class="col-md-4">
+          <label>Purchase Date</label>
+          <mat-form-field appearance="fill">
+            <input
+              matInput
+              class="form-control required"
+              [matDatepicker]="PurchaseDate"
+              formControlName="PurchaseDate"
+              placeholder="Choose a date (MM/DD/YYYY)"
+              [min]="minDate"
+            />
+            <validation-messages
+              [control]="form.controls.PurchaseDate"
+            ></validation-messages>
+            <mat-datepicker-toggle matSuffix [for]="PurchaseDate">
+            </mat-datepicker-toggle>
+            <mat-datepicker #PurchaseDate></mat-datepicker>
+          </mat-form-field>
+        </div>
       </div>
     </form>
   </div>

@@ -21,3 +21,20 @@ img:hover {
   border: 1px solid transparent;
   border-radius: 0.25rem;
 }
+
+.input-group-append {
+  position: absolute;
+  top: 29px;
+  right: 19px;
+}
+
+.bg-transparent {
+  border-color: white;
+}
+
+input.ng-invalid.ng-touched.required {
+  border-left: 4px solid red;
+  border-right: 1px solid red;
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
+}
