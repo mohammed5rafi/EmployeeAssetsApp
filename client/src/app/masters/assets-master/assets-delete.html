@@ -1,0 +1,20 @@
+<mat-dialog-content style="text-align: center">
+  <h4>Delete Assets Details</h4>
+  <hr />
+  <div class="row p-3">
+    <h4>Are you sure you want to delete?</h4>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="mb-0" style="justify-content: flex-end">
+  <button type="button" class="btn btn-light mr-1" (click)="closeDialog()">
+    Cancel
+  </button>
+  <button
+    type="button"
+    class="btn btn-danger"
+    tabindex="1"
+    (click)="doAction()"
+  >
+    Delete
+  </button>
+</mat-dialog-actions>

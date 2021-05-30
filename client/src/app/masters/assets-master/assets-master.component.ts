@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MasterService } from 'app/services/master.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -15,34 +16,98 @@ export class AssetsMasterComponent implements OnInit {
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
-
+  public AssetsItemList = [];
   constructor(
     private toastr: ToastrService,
+    private masterService: MasterService,
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
-  openDialog(i: any) {
-    let identifier = null;
-    if (i === 1) {
-      identifier = {
-        i: 1,
-      };
-    }
-    if (i === 2) {
-      identifier = {
-        i: 2,
-      };
-    }
+  async ngOnInit() {
+    await this.getMasterAssets();
+  }
 
+  async getMasterAssets() {
+    await this.masterService.getMasterAssetsList().subscribe(
+      (res) => {
+        if (res != null) {
+          this.AssetsItemList = res;
+          console.log(res);
+        }
+      },
+      (error) => {
+        if (error.status !== 404) {
+          this.toastr.error(
+            "There was a problem fetching Documents details. Please try again."
+          );
+        }
+      }
+    );
+  }
+
+  openDeleteAssets(id): void {
+    const dialogRef = this.dialog.open(DeleteAssets);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result != null) {
+        if (result.data.IsDeleted) {
+          this.DeleteAssetsdetails(id);
+        }
+      }
+    });
+  }
+  openDialog(i: any) {
+    let assetsdata = null;
+    if (i === -1) {
+      assetsdata = {
+        // formFlag: this.formFlag,
+        editChecker: false,
+        // AccontPriceList: this._globalShipment.AccountPriceList,
+        // GoodItemsList: this.GoodItemsList,
+      };
+    } else {
+      assetsdata = {
+        id: this.AssetsItemList[i].id,
+        // commodityCode: this.AssetsItemList[i].commodityCode,
+        // countryOfOrigin: this.GoodItemsList[i].countryOfOrigin,
+        editChecker: true,
+      };
+    }
     const dialogRef = this.dialog.open(AssetsAdd, {
       width: "30vw",
-      data: identifier,
+      data: assetsdata,
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  async DeleteAssetsdetails(Id) {
+    await this.masterService
+      .deleteAssetsItemsDetails(Id)
+      .toPromise()
+      .then(
+        (res) => {
+          if (res.status == 200) {
+            // this._globalShipment.formsCompletdCount = this._globalShipment.formsCompletdCount - 1;
+            // this._globalShipment.goodsFormsCompletedCount =
+            //   this._globalShipment.goodsFormsCompletedCount - 1;
+            // this.shipmentjobservice
+            //   .getShipmentFormCount(
+            //     this._globalShipment.ShipmentId,
+            //     this._globalShipment.formsCompletdCount, this._globalShipment.goodsFormsCompletedCount, 'goodssection'
+            //   ).subscribe(res => {
+            //     this._globalShipment.calculatePercentage();
+            //     console.log(res, "success");
+            //   });
+          }
+
+          this.getMasterAssets();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 }
 
@@ -188,5 +253,24 @@ export class AssetsAdd implements OnInit {
   }
   closeDialog() {
     this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: "delete-assets",
+  templateUrl: "./assets-delete.html",
+})
+export class DeleteAssets {
+  constructor(
+    public dialogRef: MatDialogRef<DeleteAssets>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  doAction() {
+    this.dialogRef.close({ data: { IsDeleted: true } });
+  }
+
+  closeDialog() {
+    this.dialogRef.close({ data: { IsDeleted: false } });
   }
 }

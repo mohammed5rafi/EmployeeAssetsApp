@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Middleware;
 using API.Extensions;
 using API.Middleware;
 using Microsoft.AspNetCore.Builder;
@@ -32,13 +33,9 @@ namespace API
         {
 
 
-             services.AddApplicationServices(_config);
+            services.AddApplicationServices(_config);
             services.AddControllers();
-
-            services.AddCors(c =>
-                {
-                    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-                });
+            services.ConfigureCorsService();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -52,7 +49,7 @@ namespace API
         {
              
             app.UseMiddleware<ExceptionMiddleware>();
-            app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseCors("ApiCorsPolicy");
             app.UseHttpsRedirection();
 
             app.UseRouting();
